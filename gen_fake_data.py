@@ -76,14 +76,14 @@ def gen_customer_kgd(customer_count: int) -> list:
 
 def gen_transaction(customers_count: int, cards_count: int) -> list:
     transaction_count = round(customers_count * 100)
-    timestamp_start = 1577826000  # 2020-01-01 00:00:00
+    timestamp_start = 1672520400  # 2023-01-01 00:00:00
     transactions = []
 
     for i in range(0, transaction_count):
         item_timestamp = random.randrange(timestamp_start, round(time.time()), step=3600)
 
         transactions.append({
-            '"дата"': "'" + datetime.utcfromtimestamp(item_timestamp).strftime('%Y-%m-%d %H:%M:%S') + "'",  # str(random.randrange(timestamp_start, round(time.time()), step=3600)),
+            '"дата"': "'" + datetime.utcfromtimestamp(item_timestamp).strftime('%Y-%m-%d %H:%M:%S') + "'",
             '"сумма"': str(float(random.randrange(100, 10000, step=5))),
             '"ID_карта" ': str(random.randrange(0, cards_count, step=1) + 1),
             # ниже следующие поля никак не участвуют в задачах,
