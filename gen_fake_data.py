@@ -58,6 +58,20 @@ def gen_customer_product_data(customers_count: int) -> list:
     return products
 
 
+def gen_customer_kgd(customer_count: int) -> list:
+    cities = ['Москва', 'Санкт-Петербург', 'Калининград']
+    kgds = []
+
+    for i in range(0, customer_count):
+        customer_id = i + 1
+        kgds.append({
+            '"Customer_id"': str(customer_id),
+            '"Отделение"': f"'{random.randrange(1, 10, step=1)} - {cities[random.randrange(0, len(cities), step=1)]}'"
+        })
+
+    return kgds
+
+
 def save_as_sql(data: list, table: str, file_path: str):
     columns = data[0].keys()
     sql_tpl = re.sub(r'^\s+', '', '''
@@ -93,6 +107,10 @@ def main():
     customer_product_data, customer_product_sql_path = gen_customer_product_data(records_count), 'docker/init/04_customer_product.sql'
     if not os.path.exists(customer_product_sql_path):
         save_as_sql(customer_product_data, '"CustomerProduct"', customer_product_sql_path)
+
+    customer_kgd_data, customer_kgd_sql_path = gen_customer_kgd(records_count), 'docker/init/05_customer_kgd.sql'
+    if not os.path.exists(customer_kgd_sql_path):
+        save_as_sql(customer_kgd_data, '"Customer_KGD"', customer_kgd_sql_path)
 
 
 if __name__ == '__main__':
